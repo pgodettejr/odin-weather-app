@@ -1,7 +1,3 @@
-import * as krappieUI from './krappieUI.js';
-import { appState } from './projects.js';
-import { removeTask, updateTask, toggleTaskChecked, storeTask } from './tasks.js';
-import { getFromStorage } from "./localStorage.js";
 import './styles.css';
 import reverbFart from './sounds/quick-fart-with-reverb.mp3';
 import Plus from './img/plus.png';
