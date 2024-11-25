@@ -1,0 +1,347 @@
+:root {
+  --light-mode-bg: rgb(240, 240, 240);
+  --light-mode-text: rgb(18, 18, 18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dark-mode-bg: rgb(18, 18, 18);
+    --dark-mode-text: rgb(240, 240, 240);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* html { color-scheme: dark } */
+
+body {
+  --scrollbar-width: 0px;
+  min-height: 100vh;
+  font-family: "Futura", Arial, Helvetica, system-ui, sans-serif;
+  overflow-x: hidden;
+
+  background-color: var(--light-mode-bg);
+  color: var(--light-mode-text);
+}
+
+.content {
+  display: grid;
+  grid-template: 0.75fr 3fr 0.25fr / repeat(3, 1fr);
+  grid-gap: 10px;
+  /* grid-template-rows: 1fr 2.5fr 0.5fr; */
+  /* grid-template-columns: 0.5fr 3.5fr; */
+  /* grid-template-columns: repeat(4, 1fr); */
+
+  /* OPTION: Alternative setup - reactivate 'grid-areas' below & possibly refactor this to work within both the .container below and here in .content (split this code up) */
+  /* Read up on grid-template-areas. What do the dots represent on each line below? */
+  
+  /* grid-template: 200px auto 100px / 1fr 3fr 1fr;
+  grid-template-areas: 
+    "heading heading heading"
+    "sidebar main ."
+    "footer . ."; */
+}
+
+.content > * {
+  padding: 15px;
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.heading {
+  min-width: 100vw;
+
+  grid-column: 1;
+  grid-row: 1 / 2;
+  /* grid-area: heading; */
+
+  padding: 40px 30px 40px;
+  margin-bottom: 4px;
+  /* box-shadow: -3px 10px 5px #c7c9cc; */
+
+  /* TODO: This gives all items a drop shadow instead of the heading itself. It kinda looks better? - test out 0 0 1rem black or green or #c7c9cc */
+  filter: drop-shadow(-3px 10px 5px #c7c9cc);  
+
+  display: grid;
+  grid-template-columns: 1fr 2.5fr 0.5fr;
+}
+
+.left-heading,
+.center-heading {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.center-heading {
+  margin-left: 5em;
+}
+
+.right-heading {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Keep in mind original image is 512 x 512 px */
+/* TODO: Remove the gray background color from this. Make it 100% transparent? */
+/* OPTION: Transition to a brighter color similar to sidebar buttons below. */
+.image-button {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  /* transition: 0.3s; */
+}
+
+.update-project .image-button {
+  background-color: rgb(141, 165, 120);
+}
+
+.delete-project .image-button {
+  background-color: red;
+}
+
+/* Search bar styling starts here (NOT the div that the search bar is in)  */
+.search #search-text {
+  display: block;
+  font-family: inherit;
+  margin: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #EEE;
+  width: 300%;
+  height: 30px;
+
+  box-shadow: inset 1px 1px 3px #CCC;
+  border-radius: 28px;
+
+  appearance: none;
+}
+
+#search-text {
+  font-size: 60%;
+}
+
+/* Styling for "Add Task" button in the heading goes in this spot (if any additional styling is needed on top of '.image-button' above) */
+
+.container {
+  /* grid-column: auto; */
+  grid-row: 2 / 3;
+  /* grid-area: main; */
+
+  display: grid;
+  grid-template-columns: 0.5fr 3.5fr;
+}
+
+.sidebar {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  /* grid-area: sidebar; */
+
+  & ul {
+    list-style-type: none;
+    margin-bottom: 1em;
+  }
+
+  & li {
+    margin-bottom: 20px;
+  }
+
+  & button {
+    margin: 2rem;
+    padding: 1rem 2rem;
+    width: 60%;
+    height: 60%;
+    border-radius: 100vw;
+    transition: 0.3s;
+
+    background-color: rgb(89, 109, 72);
+    border: 1px solid rgb(89, 109, 72);
+  }
+
+  & button:hover,
+    button:focus-visible {
+    background-color: rgb(141, 165, 120);
+    border: 1px solid rgb(141, 165, 120);
+  }
+
+  /* & button[aria-current] {
+    background: rgb(4, 155, 155);
+    border: 1px solid rgb(4, 155, 155);
+  } */
+}
+
+/* TODO: Temporary styling for main. Revisit this at some point if it doesn't look right (looks good so far without tasks being added) */
+main {
+  /* grid-column: 2 / 3; */
+
+  background-color: #EEE;
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 3; 
+  gap: 15px;
+
+  /* display: grid; */
+  /* grid-template-columns: 2fr 1fr; */
+}
+
+.task-wrapper .image-button {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  /* transition: 0.3s; */
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  display: none;
+}
+
+.js-tick {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #333;
+  border-radius: 50%;
+  
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.js-tick::before {
+  content: '✓';
+  font-size: 20px;
+  display: none;
+}
+
+.done .js-tick::before {
+  display: inline;
+}
+
+/* Task update & delete button styling */
+.update-task .image-button {
+  background-color: rgb(141, 165, 120);
+}
+
+.delete-task .image-button {
+  background-color: red;
+}
+
+footer {
+  grid-row: 3;
+
+  /* TODO: Absolute positioning puts the footer text in the top left of the page. Why? */
+  /* position: sticky; */
+
+  /* Might need to use "place-self" somewhere */
+  /* position: absolute;
+  justify-self: center; 
+  align-self: end; */
+
+  & .credits {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .credits:first-child {
+    text-align: center;
+  }
+    
+  /* grid-area: footer; */
+}
+
+dialog[id$="-dialog"] {
+  border: none;
+  background-color: #323232;
+  padding: 40px 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 5px 3px #c7c9cc;
+
+  width: 20%;
+  margin: 0 auto;
+  position: absolute;
+  top: 25%;
+}
+
+form[id$="-form"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2rem;
+
+  & p {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  & button[id$="Task"],
+    button[id$="Project"] {
+    background-color: #596D48;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  & button[id$="Task"]:hover,
+    button[id$="Project"]:hover {
+    background: hsl(92 20% 56%);
+  }
+}
+
+label, input {
+  display: block;
+  padding: 0;
+  margin: 10px 0;
+  width: 80%;
+  height: auto;
+}
+
+.form-buttons > button {
+  margin: 2rem;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Open state of the dialog form */
+dialog[open] {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Closed state of the dialog form */
+dialog {
+  opacity: 0;
+  transform: scaleY(0);
+  transition: all 0.7s ease-out allow-discrete;
+}
+
+/* Before the "open state". This has to be after dialog[open] to take effect as they have same CSS specificity */
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+/* Transition the backdrop effect when the dialog form is opened */
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  transition: all 0.7s allow-discrete;
+}
+
+dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 75%);
+}
+
+/* Don't nest this inside the above selector. It can't represent pseudo-elements */
+@starting-style {
+  dialog[open]::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+  }
+}
