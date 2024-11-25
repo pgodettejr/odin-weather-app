@@ -1,7 +1,7 @@
 {
-  "name": "krappie-todo-list",
+  "name": "odin-weather-app",
   "version": "1.0.0",
-  "description": "My krappie to-do list for The Odin Project :)",
+  "description": "My Weather browser app for The Odin Project. This is the fifth project in their vanilla JavaScript course. This project involves creating a weather forecast website using the Visual Crossing API to fetch the weather forecast from any location that the user inputs. In addition to the use of everything learned previously in the course via previous projects (npm, Webpack, ES6 Modules, DOM manipulation, etc.), the project will test knowledge and use of APIs (Visual Crossing and, hopefully, GIPHY) as well as Async and Await in JS functionality.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pgodettejr/krappie-todo-list.git"
+    "url": "git+https://github.com/pgodettejr/odin-weather-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pgodettejr/krappie-todo-list/issues"
+    "url": "https://github.com/pgodettejr/odin-weather-app/issues"
   },
-  "homepage": "https://github.com/pgodettejr/krappie-todo-list#readme",
+  "homepage": "https://github.com/pgodettejr/odin-weather-app#readme",
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "css-loader": "^7.1.1",

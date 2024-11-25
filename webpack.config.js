@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Krappie To-Do List', // Might not need this if we set the title in the src index html file since it's the template
+      title: 'Weather App', // Might not need this if we set the title in the src index html file since it's the template
       template: './src/index.html', 
       inject: 'body',
     }),
