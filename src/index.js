@@ -11,6 +11,8 @@ const taskIcon = new Image();
 taskIcon.src = Plus;
 taskIcon.classList.add("image-button");
 
+// Uncaught TypeError: Cannot read properties of null (reading 'appendChild')
+// This is fine as we aren't doing anything with this icon image as of yet
 headerTask.appendChild(taskIcon);
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function

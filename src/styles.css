@@ -39,9 +39,10 @@ body {
 
 /* TODO: Check how the grid looks. If it looks bad, go with the bottom setup below */
 .content {
-  display: grid;
+  /* display: grid;
   grid-template: 0.75fr 3fr 0.25fr / repeat(3, 1fr);
-  grid-gap: 10px;
+  grid-gap: 10px; */
+
   /* grid-template-rows: 1fr 2.5fr 0.5fr; */
   /* grid-template-columns: 0.5fr 3.5fr; */
   /* grid-template-columns: repeat(4, 1fr); */
@@ -57,10 +58,10 @@ body {
 
   /* OPTION: Alternate setup. Simple centering of everything on the opening page */
 
-  /* display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
 }
 
 .content > * {
