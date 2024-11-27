@@ -37,6 +37,7 @@ body {
   color: var(--light-mode-text);
 }
 
+/* TODO: Check how the grid looks. If it looks bad, go with the bottom setup below */
 .content {
   display: grid;
   grid-template: 0.75fr 3fr 0.25fr / repeat(3, 1fr);
@@ -53,6 +54,13 @@ body {
     "heading heading heading"
     "sidebar main ."
     "footer . ."; */
+
+  /* OPTION: Alternate setup. Simple centering of everything on the opening page */
+
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
 }
 
 .content > * {
@@ -65,11 +73,12 @@ body {
 .search #search-text {
   display: block;
   font-family: inherit;
+  /* font-size: 1rem; */
   margin: 0;
   padding: 5px;
   box-sizing: border-box;
   background-color: #EEE;
-  width: 300%;
+  width: 300%; /* Potentially change to max-width: 60% */
   height: 30px;
 
   box-shadow: inset 1px 1px 3px #CCC;
@@ -80,4 +89,13 @@ body {
 
 #search-text {
   font-size: 60%;
+}
+
+button {
+  margin: 1.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 100vw;
+
+  background-color: goldenrod;
+  border: 1px solid goldenrod;
 }

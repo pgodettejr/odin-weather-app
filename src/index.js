@@ -2,6 +2,8 @@ import { getForecast } from './weatherAppLogic.js';
 import './styles.css';
 import Plus from './img/plus.png';
 
+getForecast("London");
+
 // May use as an icon for a button. Delete this along with "import Plus" above if not
 const headerTask = document.getElementById("add-task");
 
@@ -11,47 +13,91 @@ taskIcon.classList.add("image-button");
 
 headerTask.appendChild(taskIcon);
 
+// Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
+function searchFilter() {
+  // Convert text to lowercase
+  const searchInput = document.querySelector('.search-text').value.toLowerCase();
 
-// Template for Search bar
+  // TODO: Code for condition where there is no location found goes here. See searchFilter sample below except create the span in this function and append it to the appropriate HTML element.
 
-// Search bar DOM
-const searchBar = document.getElementById("search-text");
+  getForecast(searchInput);
+};
 
-// Search filter event 
-searchBar.addEventListener('keyup', searchFilter);
+const searchButton = document.getElementById('search-btn');
+
+// Search button logic that calls the searchFilter function on button click
+searchButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  searchFilter();
+});
+
+
+// Random cat GIF and GIF search code template for use above
+
+// Image for random cat GIF on page load as well as GIF refresh for "More Cats!" button
+// const img = document.querySelector('img');
+    
+// Search DOM
+// const searchButton = document.getElementById('search-btn');
 
 // Search bar functionality
-function searchFilter (e) {
-  // Convert text to lowercase
-  let searchTextConvert = e.target.value.toLowerCase();
+// function searchFilter() {
+//   const searchInput = document.querySelector('.search-text').value;
+//   fetch(`https://api.giphy.com/v1/gifs/search?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&q=${searchInput}&limit=5`, {mode: 'cors'})
+//     .then(response => response.json())
+//     .then(response => {
+//       // Supposed to handle any scenario when GIPHY doesn't find any GIFs related to the search
+//       if (response.data.length === 0) {
+//         const searchError = document.querySelector('span');
+//         const errorText = document.createTextNode("No GIF related to the search was found");
+//         searchError.appendChild(errorText);
 
-  // List of projects
-  let projectList = document.querySelectorAll(".project-wrapper");
+//         // When this console.log is the only code under this 'then', all data info from the search shows up in console
+//         console.log(response); 
 
-  // Filters out the project the user wants to search for
-  projectList.forEach(project => {
-    let projectName = project.firstChild.textContent;
+//         return; // Supposed to end the function without doing anything else. Do we need it?
+//       }
 
-    if (projectName.toLowerCase().indexOf(searchTextConvert) != -1) {
-      project.style.display = 'block';
-    } else {
-      project.style.display = 'none';
-    }
-  });
+//       const searchResults = document.querySelector('.search-results');
+//       searchResults.replaceChildren();
 
-  // Attempt to get the search bar to search by tasks as well. Throws a 'Task not found in the tasks array' error.
+//       response.data.forEach(result => {
+//         const gifWrapper = document.createElement("div");
+//         gifWrapper.classList.add("result-wrapper");
 
-  // List of tasks
-  // let taskList = document.querySelectorAll(".task-wrapper");
+//         const resultGif = document.createElement("img");
+//         resultGif.src = result.images.original.url;
 
-  // taskList.forEach(task => {
-  //   let taskInfo = task.querySelector(".task-details");
-  //   let taskName = taskInfo.firstChild.textContent;
+//         gifWrapper.appendChild(resultGif);
+//         searchResults.appendChild(gifWrapper);
+//       })
+//     })
+//     .catch(function(err) {
+//       console.error(`Error: ${err}`);
+//     });  
+// };
 
-  //   if (taskName.toLowerCase().indexOf(searchTextConvert) != -1) {
-  //     task.style.display = 'block';
-  //   } else {
-  //     task.style.display = 'none';
-  //   }
-  // });
-}
+// searchButton.addEventListener('click', (e) => {
+//   e.preventDefault();
+//   searchFilter();
+// });
+
+// async function getCats() {
+//   const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&s=cats', {mode: 'cors'})
+//   const catData = await response.json();
+//   img.src = catData.data.images.original.url;
+// }
+
+// getCats();
+
+// const catsButton = document.querySelector('#fetch');
+
+// catsButton.addEventListener('click', async () => {
+//   try {
+//     const fetchCats = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&s=cats', {mode: 'cors'})
+//     const anotherCat = await fetchCats.json();
+//     img.src = anotherCat.data.images.original.url; 
+//   } catch (e) {
+//     console.error(`Error: ${e}`);
+//   }
+// });
