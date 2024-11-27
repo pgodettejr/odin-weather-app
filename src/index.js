@@ -1,3 +1,4 @@
+import { getForecast } from './weatherAppLogic.js';
 import './styles.css';
 import Plus from './img/plus.png';
 

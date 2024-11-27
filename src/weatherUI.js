@@ -3,24 +3,18 @@ import Delete from './img/trash-bin.png';
 
 // Template for rendering the forecast
 function renderForecast() {
-  // My version provides immediate feedback ("faster"), is straightforward and avoids any synchronization issues between the form & array, but is less consistent especially if something goes wrong with the array & risks duplication if there is a delay on the array side making the UI less consistent
+  let searchText = document.getElementById("search-text").value.trim();
 
-  let formTitle = document.getElementById("project-title").value.trim();
-
-  // OPTION: Alternative to rendering the correct project via the array instead of the form value. No conditional (if) required. More robust/consistent & provides a single source of truth, but "slower" & more complex
-
-  // const lastProject = appState.myProjects[projects.length - 1];
-
-  if (formTitle) { 
+  if (searchText) { 
     // DOM for "My Projects" section of the sidebar as well as the main area
     const projectSidebar = document.querySelector(".menu-2");
     const main = document.querySelector("main");
 
     // Generate the sidebar button
     const projectBtn = document.createElement("button");
-    let projectBtnText = document.createTextNode(`${formTitle}`);
+    let projectBtnText = document.createTextNode(`${searchText}`);
     projectBtn.classList.add("project-btn");
-    projectBtn.setAttribute("data-project-title", formTitle);
+    projectBtn.setAttribute("data-project-title", searchText);
 
     // Generate "Project" wrapper/container to be added to the main area
     const projectWrapper = document.createElement("div");
@@ -29,7 +23,7 @@ function renderForecast() {
     // Generate "Project Name" header to be added to the project container
     const projectName = document.createElement("h4");
     projectName.classList.add("project-name");
-    projectName.innerText = formTitle;
+    projectName.innerText = searchText;
 
     // Render "Update" icon button to be added to "Project Name" header
     const updateBtn = document.createElement("button");
