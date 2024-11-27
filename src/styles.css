@@ -79,7 +79,7 @@ body {
   padding: 5px;
   box-sizing: border-box;
   background-color: #EEE;
-  width: 300%; /* Potentially change to max-width: 60% */
+  width: 80%;
   height: 30px;
 
   box-shadow: inset 1px 1px 3px #CCC;
