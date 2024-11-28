@@ -1,19 +1,8 @@
 import { getForecast } from './weatherAppLogic.js';
 import './styles.css';
-import Plus from './img/plus.png';
+// import Plus from './img/plus.png';
 
 getForecast("London");
-
-// May use as an icon for a button. Delete this along with "import Plus" above if not
-const headerTask = document.getElementById("add-task");
-
-const taskIcon = new Image();
-taskIcon.src = Plus;
-taskIcon.classList.add("image-button");
-
-// Uncaught TypeError: Cannot read properties of null (reading 'appendChild')
-// This is fine as we aren't doing anything with this icon image as of yet
-headerTask.appendChild(taskIcon);
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
 function searchFilter() {
@@ -103,3 +92,12 @@ searchButton.addEventListener('click', (e) => {
 //     console.error(`Error: ${e}`);
 //   }
 // });
+
+
+// Possible template to use for the weather icons after the user has search for the forecast of a location
+// const headerTask = document.getElementById("add-task");
+
+// const taskIcon = new Image();
+// taskIcon.src = Plus;
+// taskIcon.classList.add("image-button");
+// headerTask.appendChild(taskIcon);

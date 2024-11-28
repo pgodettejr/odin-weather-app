@@ -37,8 +37,12 @@ body {
   color: var(--light-mode-text);
 }
 
-/* TODO: Check how the grid looks. If it looks bad, go with the bottom setup below */
 .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   /* display: grid;
   grid-template: 0.75fr 3fr 0.25fr / repeat(3, 1fr);
   grid-gap: 10px; */
@@ -55,19 +59,19 @@ body {
     "heading heading heading"
     "sidebar main ."
     "footer . ."; */
-
-  /* OPTION: Alternate setup. Simple centering of everything on the opening page */
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .content > * {
   padding: 15px;
   font-size: 32px;
   font-weight: bold;
+}
+
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Search bar styling starts here (NOT the div that the search bar is in)  */
