@@ -2,7 +2,7 @@ import { getForecast } from './weatherAppLogic.js';
 import './styles.css';
 // import Plus from './img/plus.png';
 
-getForecast("London");
+getForecast("London, UK");
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
 function searchFilter() {
