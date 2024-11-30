@@ -1,27 +1,39 @@
 import { getForecast } from './weatherAppLogic.js';
+import { renderCurrentTemp } from './weatherUI.js';
 import './styles.css';
 // import Plus from './img/plus.png';
 
 getForecast("London, UK");
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
-function searchFilter() {
-  // Convert text to lowercase
-  const searchInput = document.querySelector('.search-text').value.toLowerCase();
+// TODO: Refactor this code by continuing to convert it from the GIF search version to weather search instead
 
-  // TODO: Code for condition where there is no location found goes here. See searchFilter sample below except create the span in this function and append it to the appropriate HTML element.
+// function searchFilter() {
+//   // Convert text to lowercase
+//   const searchInput = document.querySelector('.search-text').value.toLowerCase();
 
-  getForecast(searchInput);
-};
+//   // TODO: Code for condition where there is no location found goes here. See searchFilter sample below except create the span in this function and append it to the appropriate HTML element.
+
+//   getForecast(searchInput);
+// };
 
 const searchButton = document.getElementById('search-btn');
 
 // Search button logic that calls the searchFilter function on button click
 searchButton.addEventListener('click', (e) => {
   e.preventDefault();
-  searchFilter();
-});
+  
+  let searchInput = document.querySelector('.search-text').value;
+  getForecast(searchInput);
+  renderCurrentTemp();
 
+  // getForecast.response.currentConditions.temp; (for current temp of location searched for)
+
+  // TODO: This is for the 7 day forecast. Currently a forEach method. The problem is the JSON hits the next 15 days including today's date
+  // getForecast.response.days.forEach(result => {
+    // code goes here... })
+
+});
 
 // Random cat GIF and GIF search code template for use above
 
@@ -67,11 +79,6 @@ searchButton.addEventListener('click', (e) => {
 //       console.error(`Error: ${err}`);
 //     });  
 // };
-
-// searchButton.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   searchFilter();
-// });
 
 // async function getCats() {
 //   const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&s=cats', {mode: 'cors'})

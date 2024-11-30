@@ -1,93 +1,57 @@
+import { getForecast } from './weatherAppLogic.js';
+import './styles.css';
 import Update from './img/update.png';
-import Delete from './img/trash-bin.png';
+// import Delete from './img/trash-bin.png';
+
+// getForecast.response.currentConditions.temp; (for current temp of location searched for)
+
+// TODO: This is for the 7 day forecast. Currently a forEach method. The problem is the JSON hits the next 15 days including today's date
+// getForecast.response.days.forEach(result => {
+  // code goes here... })
 
 // Template for rendering the forecast
-function renderForecast() {
-  let searchText = document.getElementById("search-text").value.trim();
+function renderCurrentTemp() {
+  let searchText = document.getElementById('search-text').value.trim();
 
   if (searchText) { 
-    // DOM for "My Projects" section of the sidebar as well as the main area
-    const projectSidebar = document.querySelector(".menu-2");
-    const main = document.querySelector("main");
+    // DOM for "Weather Results" section of the page
+    const forecastDisplay = document.querySelector('.search-results');
 
-    // Generate the sidebar button
-    const projectBtn = document.createElement("button");
-    let projectBtnText = document.createTextNode(`${searchText}`);
-    projectBtn.classList.add("project-btn");
-    projectBtn.setAttribute("data-project-title", searchText);
+    forecastDisplay.replaceChildren(); // Erases previous weather results if necessary (may not keep this [here])
 
-    // Generate "Project" wrapper/container to be added to the main area
-    const projectWrapper = document.createElement("div");
-    projectWrapper.classList.add("project-wrapper");
+    // Generate "Weather" wrapper to be added to the weather results area (div container)
+    const weatherWrapper = document.createElement('div');
+    weatherWrapper.classList.add('weather-wrapper');
+  
+    // Temperature in Fahrenheit or Celsius
+    let weatherTemp = document.createElement('h4');
+    weatherTemp.classList.add('weather-temp');
 
-    // Generate "Project Name" header to be added to the project container
-    const projectName = document.createElement("h4");
-    projectName.classList.add("project-name");
-    projectName.innerText = searchText;
+    // TODO: Test this line of code. If the text isn't correct, figure out how to get the temp results from the fetch request to show here
+    // Put this under button logic in index module if necessary
+    weatherTemp.innerText = getForecast.response.currentConditions.temp; 
 
-    // Render "Update" icon button to be added to "Project Name" header
-    const updateBtn = document.createElement("button");
-    updateBtn.classList.add("update-project");
+    // TODO: We need a wrapper/container for both the location icon and the text for the actual location. Place the next 2 elements under it.
 
-    const updateIcon = new Image();
-    updateIcon.src = Update;
-    updateIcon.classList.add("image-button");
+    // Name of location from the search bar, icon included 
+    //TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
+    const weatherIcon = new Image();
+    weatherIcon.src = Update;
+    weatherIcon.classList.add("image-button");
 
-    // Render "Delete" icon button to be added to "Project Name" header
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete-project");
-
-    const deleteIcon = new Image();
-    deleteIcon.src = Delete;
-    deleteIcon.classList.add("image-button");
+    let weatherLocation = document.createElement('p');
+    weatherLocation.classList.add('weather-location');
+    weatherLocation.innerText = searchText;
     
     // Append everything where it needs to be
-    projectBtn.appendChild(projectBtnText);
-    projectSidebar.appendChild(projectBtn);
+    weatherWrapper.appendChild(weatherTemp);
+    weatherWrapper.appendChild(weatherIcon);
+    weatherWrapper.appendChild(weatherLocation);
 
-    updateBtn.appendChild(updateIcon);
-    deleteBtn.appendChild(deleteIcon);
-    projectWrapper.appendChild(projectName);
-    projectWrapper.appendChild(updateBtn);
-    projectWrapper.appendChild(deleteBtn);
-
-    main.appendChild(projectWrapper);
-
-    // When here under renderProject():
-
-    // This function will only replace the current project showing in main area once. Will not show another project afterwards if you click it's related sidebar button
-    // No matter what button is clicked, all previous <ul> are removed and only the last <ul> shows, even if it's not related to the button clicked.
-    // Keep in mind the <ul> remains when renderProject is run, but the project related to it inside the array is deleted due to splice
-
-    // When placed in index.js by itself, the buttons do nothing on click
-
-    // TODO: We need to figure out how to separate this code somehow. renderProject() is doing too much as it is
-    // OPTION: HIDE the other projects in the main area instead of outright replacing their elements & add a button to "Show All Projects"
-    const projectButtons = document.querySelectorAll(".project-btn");
-
-    projectButtons.forEach(projectBtn => {
-      projectBtn.addEventListener('click', () => { // Took the "e" out of the parentheses. Will put it back in if needed later on.
-        // TODO: Code to generate the project related to the button clicked via "tabbed browsing" goes here. See example code in comments below.
-        // Goal is to render the page elements of the corresponding button WITHOUT recreating the button again
-
-        // TODO: Debug and step through this function and find out exactly what is happening when previously generated buttons are clicked (none of the buttons disappear)
-        // NOTE: Do we need to write code that says if the value of the ul is equal to the value of the button, then replace any current content and append the ul of that button?
-        main.replaceChildren();
-
-        // OPTION: Try "renderProject(project name selected via button);" instead
-        main.appendChild(projectWrapper); // currentProject argument gives Uncaught TypeError: Failed to execute 'appendChild' on 'Node': parameter 1 is not of type 'Node'.
-
-        // Previous version that tried to run the code only if the text from the button and the ul matched up
-
-        // const currentProject = document.querySelector(".project-name");
-
-        // if (button.textContent === currentProject.textContent) {
-        //   main.replaceChildren(); 
-        //   main.appendChild(currentProject);
-        // }
-      });
-    });
+    forecastDisplay.appendChild(weatherWrapper);
   }
 }
 
-export { renderForecast }
+// TODO: Need another function responsible for rendering the 7 Day Forecast
+
+export { renderCurrentTemp }
