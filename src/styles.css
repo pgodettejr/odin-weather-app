@@ -104,3 +104,8 @@ button {
   background-color: goldenrod;
   border: 1px solid goldenrod;
 }
+
+/* Potentially for the transition of all the elements on the first page. May need two of these animation frames?
+transform: translateY(1000px);
+transition: transform 1s ease-in-out;
+transform: translateY(-100px); */

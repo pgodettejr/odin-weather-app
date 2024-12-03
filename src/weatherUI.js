@@ -5,7 +5,8 @@ import Update from './img/update.png';
 
 // getForecast.response.currentConditions.temp; (for current temp of location searched for)
 
-// TODO: This is for the 7 day forecast. Currently a forEach method. The problem is the JSON hits the next 15 days including today's date
+// TODO: This is for the 7 day forecast. Currently a forEach method. The problem is the JSON hits the next 15 days including today's date.
+// Probably needs to be just a 'for' loop where i starts at 1 (i = 1) and ends at 7 (i <= 7), NOT a forEach method like we have here
 // getForecast.response.days.forEach(result => {
   // code goes here... })
 
@@ -53,5 +54,7 @@ function renderCurrentTemp() {
 }
 
 // TODO: Need another function responsible for rendering the 7 Day Forecast
+
+// TODO: Write a function that renders the background matching the weather condition for the day. Try to separate the fetch request by placing it in another function in the app logic module and have this function call that one.
 
 export { renderCurrentTemp }
