@@ -1,10 +1,10 @@
-import { getForecast, forecastResults } from './weatherAppLogic.js';
+import { getForecast, processData } from './weatherAppLogic.js';
 import { renderCurrentTemp } from './weatherUI.js';
 import './styles.css';
 // import Plus from './img/plus.png';
 
 getForecast("London, UK");
-forecastResults();
+processData();
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
 // TODO: Refactor this code by continuing to convert it from the GIF search version to weather search instead

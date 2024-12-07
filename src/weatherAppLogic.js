@@ -28,7 +28,7 @@ async function getForecast(location) {
   // PRINT = console.log()
 // END
 
-async function forecastResults() {
+async function processData() {
   // We need the 'address', the 'temp' from 'currentConditions' and the 'tempmax' & 'tempmin' from object indexes 1-7 in the 'days' array
   
   // We likely also need to return one object with 2 keys, the first key representing today's temp and the second key representing all the future dates, which will show as a nested array with 15 objects. Then, we need to figure out how to only get indexes 1-7 from that array
@@ -48,31 +48,48 @@ async function forecastResults() {
   let futureTemps = weather.days;
   console.log(futureTemps);
 
-  // OPTION: 'Filter' method on 'futureTemps' to only get the first 7 items
-  // for (let i = 1; i <= 7; i++) {
-  //   if (i <= 7) {
-  //     // May need to use 'map' method and/or 'filter' method and create a new array with those instead of what we have below currently
-  //     let futureDate = futureTemps[i].datetime;
-  //     let tempHigh = futureTemps[i].tempmax;
-  //     let tempLow = futureTemps[i].tempmin;
+  const outlook = {
+    temperature: todaysTemp,
+    weeklyForecast: [],
 
-  //     const outlook = {
-  //       todaysTemp,
-  //       futureDate,
-  //       tempHigh,
-  //       tempLow
-  //     };
+    // TODO: storeForecast is showing the entire 'days' array in the weeklyForecast array when we only need objects 1 thru 7. Find out why.
+    // Review 'for...of' loop docs on how to skip a 'day' variable & how to exit the loop at a certain sequence/variable. 
+    // Can even use 'break' & 'continue' in a 'for...of loop?
+    storeForecast: function () {
+      // Maybe we CAN use a 'for...of' loop but get it to stop at the 7th element/index. My first attempt but 'day' (variable) wasn't defined
+      // We might need a more traditional 'for' loop here instead if we can't get it to operate via the TODO just above here
+      for (const day of futureTemps) {
+        // TODO: This doesn't skip the first object in the 'days' array in the API. Change the conditional?
+        if (day == 0) { // Previously (day[0] || futureTemps[day] == 0)
+          continue;
+        }
 
-  //     // Possibly try 'Array.from' method to change each object to an array and do something with those new arrays?
-  //     // let arr = Array.from(outlook);
-  //     // alert(arr);
-      
-  //     // TODO: outlook[i] object with all keys and values shows up in DevTools but "undefined" in console
-  //     // TODO: Loops through once but never again after 'return'. If we put 'return' on the outside, how do we get the function to return 7 objects for each future date. Or do we need one object with 2 keys, the first key representing today's temp and the second key representing all the future dates (it would be a nested object or nested array followed by nested objects for each array index)
-  //     console.log(outlook[i]);
-  //     return outlook[i]; // May need this inside { } for closure reasons?
-  //   }
-  // }
+        // TODO: This doesn't end the function after reaching the 8th object in the 'days' array, but keeps going. Change the conditional?
+        if (day > 7) { // Previously (futureTemps[day] > 7)
+          break;
+        }
+
+        let futureDate = day.datetime;
+        let tempHigh = day.tempmax;
+        let tempLow = day.tempmin;
+        let weatherIcon = day.icon;
+
+        const futureForecast = {
+          futureDate,
+          tempHigh,
+          tempLow,
+          weatherIcon
+        };
+        
+        this.weeklyForecast.push(futureForecast);
+      }
+    }
+  }
+
+  outlook.storeForecast();
+
+  console.log(outlook);  
+  return outlook;
 
   // let newObject = {
   //   todaysTemp,
@@ -81,52 +98,33 @@ async function forecastResults() {
 
   // Possible 'for' loop alternative
   // OPTION: 'Filter' method on 'futureTemps' to only get the first 7 items
-  for (let i = 1; i < futureTemps.length; i++) {
-    if (futureTemps[i] > 7) {
-      break;
-    }
-
-    // May need to use 'map' method and/or 'filter' method and create a new array with those instead of what we have below currently
-    let futureDate = futureTemps[i].datetime;
-    let tempHigh = futureTemps[i].tempmax;
-    let tempLow = futureTemps[i].tempmin;
-
-    const outlook = {
-      todaysTemp,
-      futureDate,
-      tempHigh,
-      tempLow
-    };
-
-   // Possibly try 'Array.from' method to change each object to an array and do something with those new arrays?
-   // let arr = Array.from(outlook);
-   // alert(arr);
-
-    // TODO: outlook[i] object with all keys and values shows up in DevTools but "undefined" in console
-    // TODO: Loops through once but never again after 'return'. If we put 'return' on the outside, how do we get the function to return 7 objects for each future date. Or do we need one object with 2 keys, the first key representing today's temp and the second key representing all the future dates (it would be a nested object or nested array followed by nested objects for each array index)
-    console.log(outlook[i]);
-    return outlook[i]; // May need this inside { } for closure reasons?
-  }
-
-  // Maybe we CAN use a 'for...of' loop but get it to stop at the 7th element/index. My first attempt but 'day' (variable) wasn't defined
-  // for (const day of futureTemps) {
-  //   if (futureTemps[day] > 7) {
+  // for (let i = 1; i < futureTemps.length; i++) {
+  //   if (futureTemps[i] > 7) {
   //     break;
   //   }
 
-  //   let futureDate = futureTemps[day].datetime;
-  //   let tempHigh = futureTemps[day].tempmax;
-  //   let tempLow = futureTemps[day].tempmin;
+  //   // May need to use 'map' method and/or 'filter' method and create a new array with those instead of what we have below currently
+  //   let futureDate = futureTemps[i].datetime;
+  //   let tempHigh = futureTemps[i].tempmax;
+  //   let tempLow = futureTemps[i].tempmin;
 
   //   const outlook = {
+  //     todaysTemp,
   //     futureDate,
   //     tempHigh,
   //     tempLow
   //   };
-    
-  //   return outlook;
-  // }
 
+  //  // Possibly try 'Array.from' method to change each object to an array and do something with those new arrays?
+  //  // let arr = Array.from(outlook);
+  //  // alert(arr);
+
+  //   // TODO: outlook[i] object with all keys and values shows up in DevTools but "undefined" in console
+  //   // TODO: Loops through once but never again after 'return'. If we put 'return' on the outside, how do we get the function to return 7 objects for each future date. Or do we need one object with 2 keys, the first key representing today's temp and the second key representing all the future dates (it would be a nested object or nested array followed by nested objects for each array index)
+  //   console.log(outlook[i]);
+  //   return outlook[i]; // May need this inside { } for closure reasons?
+  // }
+  
   // OPTION: Using 'map' or 'filter' on the original 'days' array is another approach
 };
 
@@ -172,4 +170,4 @@ async function forecastResults() {
 
 // TODO: Write a function that fetches the GIF that matches the day's forecast (linked to getForecast fetching the Weather Crossing API?). We will need to utilize 'getForecast.response.currentConditions.conditions' to read the weather description & possibly chain the (.then) promises as well (fetch(Weather Crossing), .then(result => fetch(GIPHY)))
 
-export { getForecast, forecastResults }
+export { getForecast, processData }
