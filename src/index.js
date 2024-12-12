@@ -1,40 +1,57 @@
 import { getForecast, processData } from './weatherAppLogic.js';
-import { renderCurrentTemp } from './weatherUI.js';
+// import { renderCurrentTemp } from './weatherUI.js';
 import './styles.css';
 // import Plus from './img/plus.png';
 
 getForecast("London, UK");
-processData();
+// processData();
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
-// TODO: Refactor this code by continuing to convert it from the GIF search version to weather search instead
+function searchFilter() {
+  // Convert text to lowercase
+  const searchInput = document.querySelector('.search-text').value.toLowerCase();
 
-// function searchFilter() {
-//   // Convert text to lowercase
-//   const searchInput = document.querySelector('.search-text').value.toLowerCase();
+  // TODO: If we run processData on its own, the location is 'undefined'. If we run both of these together, getForecast grabs the correct location but processData shows an 'undefined' location when it awaits getForecast (see 'weather' variable in processData)
+  getForecast(searchInput);
+  processData(searchInput);
 
-//   // TODO: Code for condition where there is no location found goes here. See searchFilter sample below except create the span in this function and append it to the appropriate HTML element.
+  // Handle any scenario where there is no location found to get weather for
+  if (!processData) {
+    const searchResults = document.querySelector('.search-results');
+    const searchError = document.createElement('span');
+    const errorText = document.createTextNode("No GIF related to the search was found");
 
-//   getForecast(searchInput);
-// };
+    searchError.appendChild(errorText);
+    searchResults.replaceChildren();
+    searchResults.appendChild(searchError);
+
+    // We had 'response' as the parameter from the cat GIF project but we can't use that here
+    // console.log(); 
+
+    return; // Supposed to end the function without doing anything else. Do we need it?
+  }
+};
 
 const searchButton = document.getElementById('search-btn');
 
 // Search button logic that calls the searchFilter function on button click
-searchButton.addEventListener('click', (e) => {
+// WHEN the user inputs a location in the Search bar & clicks the Search button
+searchButton.addEventListener('click', (e) => { // CALL the searchButton event listener
   e.preventDefault();
   
-  let searchInput = document.querySelector('.search-text').value;
-  getForecast(searchInput);
-  renderCurrentTemp();
+  // TODO: Test this to see if it calls correctly without the variable declared along with it being added as a parameter to the function call
+  // let searchInput = document.querySelector('.search-text').value;
+  searchFilter(); // Had 'searchInput' here before
+
+  // REMOVE (HIDE) the Heading element
+
+  // SET the remaining elements to the top of the webpage
+
+  // CALL the render forecast functions under those elements that will:
+  // renderCurrentTemp(); // SHOW the forecast for that location for that day as well as the next 7 days
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for)
-
-  // TODO: This is for the 7 day forecast. Currently a forEach method. The problem is the JSON hits the next 15 days including today's date
-  // Probably needs to be just a 'for' loop where i starts at 1 (i = 1) and ends at 7 (i <= 7), NOT a forEach method like we have here
-  // getForecast.response.days.forEach(result => {
-    // code goes here... })
-
+  console.log("Success!");
 });
 
 // Random cat GIF and GIF search code template for use above

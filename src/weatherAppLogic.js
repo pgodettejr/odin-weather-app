@@ -1,5 +1,6 @@
 // Hits the API and returns all the weather data for a location
 // OPTION: Refactor this to the MDN example we have in Obsidian notes (under 'Divide & Conquer')
+// TODO: 'location' showing as 'undefined' when trying to set up the search bar/button logic to get other locations outside of what we enter into the code ourselves or the console
 async function getForecast(location) { 
   try {
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=8997Y4VLTDSVA5KYY96GVK9Y4`);
@@ -17,9 +18,15 @@ async function getForecast(location) {
 async function processData() {
   try {
     // CALL getForecast function
-    const weather = await getForecast("London, UK");
+    // TODO: Still calling an 'undefined' location despite the location being correct in the actual getForecast function (search bar/button)
+    const weather = await getForecast();
 
     // WHEN this function receives the JSON data from getForecast
+
+    // SET a variable equal to either the "resolvedAddress" property 
+    let address = weather.resolvedAddress;
+    console.log(address);
+
     // SET a variable equal to the "temp" property under the "currentConditions" object
     let todaysTemp = weather.currentConditions.temp;
     console.log(todaysTemp);
@@ -29,6 +36,7 @@ async function processData() {
     console.log(futureTemps);
 
     const outlook = {
+      location: address,
       temperature: todaysTemp,
       weeklyForecast: [],
       storeForecast: function () {
