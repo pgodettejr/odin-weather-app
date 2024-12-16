@@ -6,30 +6,38 @@ import './styles.css';
 getForecast("London, UK");
 // processData();
 
-// Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location via 'getForecast' function
+// Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location
 function searchFilter() {
-  // Convert text to lowercase
+  // OBTAIN the text inside the search bar of the UI and convert that text to lowercase
   const searchInput = document.querySelector('.search-text').value.toLowerCase();
 
-  // TODO: If we run processData on its own, the location is 'undefined'. If we run both of these together, getForecast grabs the correct location but processData shows an 'undefined' location when it awaits getForecast (see 'weather' variable in processData)
-  getForecast(searchInput);
-  processData(searchInput);
-
-  // Handle any scenario where there is no location found to get weather for
-  if (!processData) {
-    const searchResults = document.querySelector('.search-results');
-    const searchError = document.createElement('span');
-    const errorText = document.createTextNode("No GIF related to the search was found");
-
-    searchError.appendChild(errorText);
-    searchResults.replaceChildren();
-    searchResults.appendChild(searchError);
-
-    // We had 'response' as the parameter from the cat GIF project but we can't use that here
-    // console.log(); 
-
-    return; // Supposed to end the function without doing anything else. Do we need it?
-  }
+  // CALL getForecast with searchInput as the parameter representing the location to get the weather from
+  const myWeather = getForecast(searchInput);
+  
+  myWeather.then(() => {
+    // IF the location that the user inputs can't be found by the weather API THEN
+    if (!getForecast) {
+      // CREATE a <span> element inside the 'search-results' div with an error message as text
+      const searchResults = document.querySelector('.search-results');
+      const searchError = document.createElement('span');
+      const errorText = document.createTextNode("No GIF related to the search was found");
+  
+      // APPEND the error message to its <span> element & the <span> element to the 'search-results' div
+      searchError.appendChild(errorText);
+      searchResults.replaceChildren();
+      searchResults.appendChild(searchError);
+  
+      // SHOW the <span> element with its error message in the UI
+      return; // Supposed to end the function without doing anything else. Do we need it?
+    // ELSE log the weather location result from the search bar in the console
+    } else {
+      processData();
+    }
+    // ENDIF
+  })
+  .catch(function(err) {
+    console.error(`Error: ${err}`);
+  });
 };
 
 const searchButton = document.getElementById('search-btn');
@@ -39,9 +47,7 @@ const searchButton = document.getElementById('search-btn');
 searchButton.addEventListener('click', (e) => { // CALL the searchButton event listener
   e.preventDefault();
   
-  // TODO: Test this to see if it calls correctly without the variable declared along with it being added as a parameter to the function call
-  // let searchInput = document.querySelector('.search-text').value;
-  searchFilter(); // Had 'searchInput' here before
+  searchFilter();
 
   // REMOVE (HIDE) the Heading element
 
@@ -51,7 +57,6 @@ searchButton.addEventListener('click', (e) => { // CALL the searchButton event l
   // renderCurrentTemp(); // SHOW the forecast for that location for that day as well as the next 7 days
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for)
-  console.log("Success!");
 });
 
 // Random cat GIF and GIF search code template for use above
