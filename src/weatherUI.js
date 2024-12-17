@@ -48,6 +48,26 @@ function renderCurrentTemp() {
 
 // TODO: Need another function responsible for rendering the 7 Day Forecast called 'renderWeeklyTemps()'
 
-// TODO: Write a function that renders the background matching the weather condition for the day. Try to separate the fetch request by placing it in another function in the app logic module and have this function call that one.
+
+// TODO: Write a function getWeatherGIF() that fetches the GIF that matches the day's forecast (linked to getForecast fetching the Weather Crossing API?). We will need to utilize 'getForecast.response.currentConditions.conditions' to read the weather description & possibly chain the (.then) promises as well (fetch(Weather Crossing), .then(result => fetch(GIPHY))). The function should also render the background matching the weather condition for the day.
+
+// CALL processData function (by declaring a variable equal to it)
+// READ the Weather Crossing API's 'icon set parameter' from the returned 'outlook' object (for today's temperature) in processData 
+// SET a variable equal to that 'icon set parameter'
+// OBTAIN a GIF from the GIPHY API related to that variable representing the weather text in the 'icon set parameter'
+// SET a variable equal to the 'search-results' div
+// IF there is no 'icon set parameter' OR there is no weather-related GIF that the GIPHY API can find
+  // CREATE a <span> or <img> element showing some type of error message as text or an image (browser may show broken image as default) 
+  // APPEND the error message (if needed) to the <span> or <img> element & then that element to the 'search-results' div
+  // SHOW that element along with any error message in the UI
+// ELSE
+  // CREATE an empty <img> element
+
+
+  // CASE pseudocode goes here
+
+
+  // APPEND the GIF from the API to that <img> element as a background image
+  // SHOW the GIF as a background image for the weather results in the UI
 
 export { renderCurrentTemp }
