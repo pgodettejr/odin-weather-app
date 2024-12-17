@@ -46,7 +46,7 @@ function renderCurrentTemp() {
   }
 }
 
-// TODO: Need another function responsible for rendering the 7 Day Forecast
+// TODO: Need another function responsible for rendering the 7 Day Forecast called 'renderWeeklyTemps()'
 
 // TODO: Write a function that renders the background matching the weather condition for the day. Try to separate the fetch request by placing it in another function in the app logic module and have this function call that one.
 

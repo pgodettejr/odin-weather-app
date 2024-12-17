@@ -1,6 +1,9 @@
 // Variable that allows both functions below to declare the same user input location via global scope
 let myLocation;
 
+// Possibly need this empty array to add the outlooks from processData into
+// let outlooks = [];
+
 // Hits the API and returns all the weather data for a location
 // OPTION: Refactor this to the MDN example we have in Obsidian notes (under 'Divide & Conquer')
 async function getForecast(location) { 
@@ -37,6 +40,7 @@ async function processData() {
     let futureTemps = weather.days;
     console.log(futureTemps);
 
+    // TODO: May need another property/key representing the weather icon parameter for today's temperature for the weather GIF logic to read
     const outlook = {
       location: address,
       temperature: todaysTemp,
@@ -74,12 +78,31 @@ async function processData() {
 
     // PRINT = console.log()
     console.log(outlook);  
-    return outlook;
+    return outlook; // OPTION: Return this like a closure/factory function via 'return { outlook }' so the GIF fetching function has access to the outlook OR push it to the empty array above (outlooks.push(outlook);)? See if simply using 'processData.outlook' in other modules will work first.
   } catch (err) {
     console.error(err);
   }
 };
 
 // TODO: Write a function that fetches the GIF that matches the day's forecast (linked to getForecast fetching the Weather Crossing API?). We will need to utilize 'getForecast.response.currentConditions.conditions' to read the weather description & possibly chain the (.then) promises as well (fetch(Weather Crossing), .then(result => fetch(GIPHY)))
+
+// CALL processData function (by declaring a variable equal to it)
+// READ the Weather Crossing API's 'icon set parameter' from the returned 'outlook' object (for today's temperature) in processData 
+// SET a variable equal to that 'icon set parameter'
+// OBTAIN a GIF from the GIPHY API related to that variable representing the weather text in the 'icon set parameter'
+// SET a variable equal to the 'search-results' div
+// IF there is no 'icon set parameter' OR there is no weather-related GIF that the GIPHY API can find
+  // CREATE a <span> or <img> element showing some type of error message as text or an image (browser may show broken image as default) 
+  // APPEND the error message (if needed) to the <span> or <img> element & then that element to the 'search-results' div
+  // SHOW that element along with any error message in the UI
+// ELSE
+  // CREATE an empty <img> element
+
+  
+  // CASE pseudocode goes here
+
+
+  // APPEND the GIF from the API to that <img> element as a background image
+  // SHOW the GIF as a background image for the weather results in the UI
 
 export { getForecast, processData }

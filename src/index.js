@@ -1,5 +1,5 @@
 import { getForecast, processData } from './weatherAppLogic.js';
-// import { renderCurrentTemp } from './weatherUI.js';
+import { renderCurrentTemp } from './weatherUI.js';
 import './styles.css';
 // import Plus from './img/plus.png';
 
@@ -54,7 +54,12 @@ searchButton.addEventListener('click', (e) => { // CALL the searchButton event l
   // SET the remaining elements to the top of the webpage
 
   // CALL the render forecast functions under those elements that will:
-  // renderCurrentTemp(); // SHOW the forecast for that location for that day as well as the next 7 days
+
+  // SHOW the forecast for that location for that day
+  renderCurrentTemp(); 
+
+  // SHOW the forecast for that location during the next 7 days
+  // renderWeeklyTemps();
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for)
 });
