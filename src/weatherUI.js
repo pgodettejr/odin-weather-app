@@ -23,6 +23,7 @@ function renderCurrentTemp() {
 
     // TODO: Test this line of code. If the text isn't correct, figure out how to get the temp results from the fetch request to show here
     // Put this under button logic in index module if necessary
+    // Uncaught TypeError: Cannot read properties of undefined (reading 'currentConditions')
     weatherTemp.innerText = getForecast.response.currentConditions.temp; 
 
     // TODO: We need a wrapper/container for both the location icon and the text for the actual location. Place the next 2 elements under it.

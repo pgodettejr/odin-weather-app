@@ -1,10 +1,12 @@
 import { getForecast, processData } from './weatherAppLogic.js';
-import { renderCurrentTemp } from './weatherUI.js';
+import { renderCurrentTemp, getWeatherGIF } from './weatherUI.js';
 import './styles.css';
 // import Plus from './img/plus.png';
 
 getForecast("London, UK");
-// processData();
+
+// TODO: Doesn't recognize the previous location in the getForecast call above. Location shows 'undefined' & API grabs default (Fine, NY)
+processData();
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location
 function searchFilter() {
@@ -60,6 +62,10 @@ searchButton.addEventListener('click', (e) => { // CALL the searchButton event l
 
   // SHOW the forecast for that location during the next 7 days
   // renderWeeklyTemps();
+
+  // TODO: This currently never gets read by the event listener. It stops after 'searchFilter' is done (and 'renderCurrentTemp' error before that)
+  // DISPLAY the GIF for the related weather condition as a background image
+  getWeatherGIF();
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for)
 });
