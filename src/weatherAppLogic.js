@@ -10,7 +10,7 @@ async function getForecast(location) {
   try {
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=8997Y4VLTDSVA5KYY96GVK9Y4`);
 
-    myLocation = location;
+    myLocation = location; // This is so 'processData' below remembers the user input location
     const forecastData = await response.json();
 
     console.log(forecastData);
@@ -28,7 +28,7 @@ async function processData() {
 
     // WHEN this function receives the JSON data from getForecast
 
-    // SET a variable equal to either the "resolvedAddress" property 
+    // SET a variable equal to the "resolvedAddress" property 
     let address = weather.resolvedAddress;
     console.log(address);
 
@@ -44,6 +44,7 @@ async function processData() {
     let futureTemps = weather.days;
     console.log(futureTemps);
 
+    // PRINT a new object that only has the current daily temp, the 7 day forecast and whether or not the temp should be F or C from the JSON
     const outlook = {
       location: address,
       temperature: todaysTemp,
@@ -77,11 +78,11 @@ async function processData() {
       }
     }
 
-    // PRINT a new object that only has the current daily temp, the 7 day forecast and whether or not the temp should be F or C from the JSON
     outlook.storeForecast();
 
     // PRINT = console.log()
     console.log(outlook);  
+    
     return outlook; // OPTION: Return this like a closure/factory function via 'return { outlook }' so the GIF fetching function has access to the outlook OR push it to the empty array above (outlooks.push(outlook);)? See if simply using 'processData.outlook' in other modules will work first.
   } catch (err) {
     console.error(err);

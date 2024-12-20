@@ -16,7 +16,7 @@ function renderCurrentTemp() {
     // Generate "Weather" wrapper to be added to the weather results area (div container)
     const weatherWrapper = document.createElement('div');
     weatherWrapper.classList.add('weather-wrapper');
-  
+
     // Temperature in Fahrenheit or Celsius
     let weatherTemp = document.createElement('h4');
     weatherTemp.classList.add('weather-temp');
@@ -26,10 +26,12 @@ function renderCurrentTemp() {
     // Uncaught TypeError: Cannot read properties of undefined (reading 'currentConditions')
     weatherTemp.innerText = getForecast.response.currentConditions.temp; 
 
+    // TODO: Likely need to generate a text element showing the condition equal to the 'icon set parameter' here
+
     // TODO: We need a wrapper/container for both the location icon and the text for the actual location. Place the next 2 elements under it.
 
     // Name of location from the search bar, icon included 
-    //TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
+    // TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
     const weatherIcon = new Image();
     weatherIcon.src = Update;
     weatherIcon.classList.add("image-button");
@@ -106,6 +108,7 @@ function getWeatherGIF() {
 
       // APPEND the error message (if needed) to the <span> or <img> element & then that element to the 'search-results' div
       summaryError.appendChild(errorMessage);
+      forecastDisplay.appendChild(summaryError); // Placeholder for now. Will refactor this to show as a background image
 
       // SHOW that element along with any error message in the UI
       // TODO: Figure out how to display the error message as the background image itself (where the GIF would normally be). CSS 'background-image' property with 'url(link)' as the key? Create another container to use as the background and append the error to that?

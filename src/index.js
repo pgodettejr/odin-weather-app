@@ -33,7 +33,7 @@ function searchFilter() {
       return; // Supposed to end the function without doing anything else. Do we need it?
     // ELSE log the weather location result from the search bar in the console
     } else {
-      processData();
+      processData(); // Does this need 'searchFilter' as a parameter to match the location as well? Run the code to make sure it doesn't.
     }
     // ENDIF
   })
@@ -67,7 +67,7 @@ searchButton.addEventListener('click', (e) => { // CALL the searchButton event l
   // DISPLAY the GIF for the related weather condition as a background image
   getWeatherGIF();
 
-  // getForecast.response.currentConditions.temp; (for current temp of location searched for)
+  // getForecast.response.currentConditions.temp; (for current temp of location searched for) - TODO: Delete this?
 });
 
 // Random cat GIF and GIF search code template for use above
