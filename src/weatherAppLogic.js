@@ -10,6 +10,7 @@ async function getForecast(location) {
   try {
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=8997Y4VLTDSVA5KYY96GVK9Y4`);
 
+    // TODO: The TypeError for the weatherSummary variable under the getWeatherGIF function in the UI module throws at this line. Why?
     myLocation = location; // This is so 'processData' below remembers the user input location
     const forecastData = await response.json();
 
@@ -82,7 +83,7 @@ async function processData() {
 
     // PRINT = console.log()
     console.log(outlook);  
-    
+
     return outlook; // OPTION: Return this like a closure/factory function via 'return { outlook }' so the GIF fetching function has access to the outlook OR push it to the empty array above (outlooks.push(outlook);)? See if simply using 'processData.outlook' in other modules will work first.
   } catch (err) {
     console.error(err);

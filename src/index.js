@@ -33,7 +33,7 @@ function searchFilter() {
       return; // Supposed to end the function without doing anything else. Do we need it?
     // ELSE log the weather location result from the search bar in the console
     } else {
-      processData(); // Does this need 'searchFilter' as a parameter to match the location as well? Run the code to make sure it doesn't.
+      processData();
     }
     // ENDIF
   })

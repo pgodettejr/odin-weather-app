@@ -1,4 +1,4 @@
-import { getForecast, processData } from './weatherAppLogic.js';
+import { processData } from './weatherAppLogic.js';
 import './styles.css';
 import Update from './img/update.png';
 // import Delete from './img/trash-bin.png';
@@ -7,7 +7,7 @@ import Update from './img/update.png';
 const forecastDisplay = document.querySelector('.search-results');
 
 // Template for rendering the forecast
-function renderCurrentTemp() {
+async function renderCurrentTemp() {
   let searchText = document.getElementById('search-text').value.trim();
 
   if (searchText) { 
@@ -23,8 +23,12 @@ function renderCurrentTemp() {
 
     // TODO: Test this line of code. If the text isn't correct, figure out how to get the temp results from the fetch request to show here
     // Put this under button logic in index module if necessary
+
     // Uncaught TypeError: Cannot read properties of undefined (reading 'currentConditions')
-    weatherTemp.innerText = getForecast.response.currentConditions.temp; 
+    // ATTEMPT #1: Removed '.response' from the expression 'getForecast.response.currentConditions.temp'
+    // ATTEMPT #2: Added async/await to the function & this line of code (await getForecast.currentConditions.temp)
+    // ATTEMPT #3: Changed to "processData.outlook.temperature"
+    weatherTemp.innerText = await processData.outlook.temperature; 
 
     // TODO: Likely need to generate a text element showing the condition equal to the 'icon set parameter' here
 
@@ -60,6 +64,7 @@ function renderCurrentTemp() {
 function getWeatherGIF() {
   // READ the Weather Crossing API's 'icon set parameter' from the returned 'outlook' object (for today's temperature) in processData 
   // SET a variable equal to that 'icon set parameter'
+  // Uncaught TypeError: Cannot read properties of undefined (reading 'summary')
   let weatherSummary = processData.outlook.summary;
 
   // CREATE an empty <img> element
@@ -100,6 +105,7 @@ function getWeatherGIF() {
         break; // OPTION: May need to be 'return true' instead
     }
 
+    // TODO: Move this conditional up above the switch statement if possible
     // IF there is no 'icon set parameter' OR there is no weather-related GIF that the GIPHY API can find
     if (!weatherSummary || !fetchClip) {
       // CREATE a <span> or <img> element showing some type of error message as text or an image (browser may show broken image as default)
