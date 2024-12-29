@@ -9,16 +9,17 @@ getForecast("London, UK");
 processData();
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location
-function searchFilter() {
+async function searchFilter() {
   // OBTAIN the text inside the search bar of the UI and convert that text to lowercase
   const searchInput = document.querySelector('.search-text').value.toLowerCase();
-
-  // CALL getForecast with searchInput as the parameter representing the location to get the weather from
-  const myWeather = getForecast(searchInput);
   
-  myWeather.then(() => {
+  try {
+    // CALL getForecast with searchInput as the parameter representing the location to get the weather from
+    const myWeather = await getForecast(searchInput);
+
     // IF the location that the user inputs can't be found by the weather API THEN
-    if (!getForecast) {
+    // Previously 'myWeather.then(() => { code }.catch (err)) with no try/catch due to no async/await
+    if (!myWeather) {
       // CREATE a <span> element inside the 'search-results' div with an error message as text
       const searchResults = document.querySelector('.search-results');
       const searchError = document.createElement('span');
@@ -36,20 +37,24 @@ function searchFilter() {
       processData();
     }
     // ENDIF
-  })
-  .catch(function(err) {
+  } catch (err) {
     console.error(`Error: ${err}`);
-  });
+  }
 };
 
 const searchButton = document.getElementById('search-btn');
 
+// ATTEMPT #1: searchFilter() call followed by indented chain of .then(renderCurrentTemp) & .then(getWeatherGIF)
+// ATTEMPT #2: 'const userLocation = searchFilter()' variable followed by 'userLocation.then(() => {renderCurrentTemp, getWeatherGIF})'
+// ATTEMPT #3: Refactor searchFilter above to async/await and search button event listener to async/await
+
 // Search button logic that calls the searchFilter function on button click
 // WHEN the user inputs a location in the Search bar & clicks the Search button
-searchButton.addEventListener('click', (e) => { // CALL the searchButton event listener
+searchButton.addEventListener('click', async (e) => { // CALL the searchButton event listener
   e.preventDefault();
   
-  searchFilter();
+  // Variable for 'searchFilter' function
+  const userLocation = await searchFilter();
 
   // REMOVE (HIDE) the Heading element
 
@@ -57,15 +62,21 @@ searchButton.addEventListener('click', (e) => { // CALL the searchButton event l
 
   // CALL the render forecast functions under those elements that will:
 
+  // Uncaught TypeError: Cannot read properties of undefined (reading 'then') - was userLocation.then(() => {} with async/await)
   // SHOW the forecast for that location for that day
-  renderCurrentTemp(); 
-
+  
+  // TODO: Not being read by this event listener at all. Find out why.
+  // OPTION: renderCurrentTemp(userLocation); - no variable declaration at all
+  const locationTemp = await renderCurrentTemp(userLocation);
+  
   // SHOW the forecast for that location during the next 7 days
-  // renderWeeklyTemps();
+  // renderWeeklyTemps
 
   // TODO: This currently never gets read by the event listener. It stops after 'searchFilter' is done (and 'renderCurrentTemp' error before that)
   // DISPLAY the GIF for the related weather condition as a background image
-  getWeatherGIF();
+  getWeatherGIF(userLocation);
+
+  return locationTemp
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for) - TODO: Delete this?
 });

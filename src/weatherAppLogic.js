@@ -84,7 +84,9 @@ async function processData() {
     // PRINT = console.log()
     console.log(outlook);  
 
-    return outlook; // OPTION: Return this like a closure/factory function via 'return { outlook }' so the GIF fetching function has access to the outlook OR push it to the empty array above (outlooks.push(outlook);)? See if simply using 'processData.outlook' in other modules will work first.
+    // OPTION: Return this like a closure/factory function via 'return { outlook }' so the GIF fetching function has access to the outlook OR push it to the empty array above (outlooks.push(outlook);)? 
+    // ATTEMPT #1: Simply used 'processData.outlook' in other modules before changing this
+    return { outlook }; 
   } catch (err) {
     console.error(err);
   }
