@@ -18,7 +18,6 @@ async function searchFilter() {
     const myWeather = await getForecast(searchInput);
 
     // IF the location that the user inputs can't be found by the weather API THEN
-    // Previously 'myWeather.then(() => { code }.catch (err)) with no try/catch due to no async/await
     if (!myWeather) {
       // CREATE a <span> element inside the 'search-results' div with an error message as text
       const searchResults = document.querySelector('.search-results');
@@ -44,10 +43,6 @@ async function searchFilter() {
 
 const searchButton = document.getElementById('search-btn');
 
-// ATTEMPT #1: searchFilter() call followed by indented chain of .then(renderCurrentTemp) & .then(getWeatherGIF)
-// ATTEMPT #2: 'const userLocation = searchFilter()' variable followed by 'userLocation.then(() => {renderCurrentTemp, getWeatherGIF})'
-// ATTEMPT #3: Refactor searchFilter above to async/await and search button event listener to async/await
-
 // Search button logic that calls the searchFilter function on button click
 // WHEN the user inputs a location in the Search bar & clicks the Search button
 searchButton.addEventListener('click', async (e) => { // CALL the searchButton event listener
@@ -56,23 +51,25 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
   // Variable for 'searchFilter' function
   const userLocation = await searchFilter();
 
-  // REMOVE (HIDE) the Heading element
+  // BRANCH: REMOVE (HIDE) the Heading element
 
-  // SET the remaining elements to the top of the webpage
+  // BRANCH: SET the remaining elements to the top of the webpage
 
   // CALL the render forecast functions under those elements that will:
 
   // Uncaught TypeError: Cannot read properties of undefined (reading 'then') - was userLocation.then(() => {} with async/await)
   // SHOW the forecast for that location for that day
-  
-  // TODO: Not being read by this event listener at all. Find out why.
+
+  // TODO: When renderCurrentTemp runs, all code inside its conditional if/else (see UI module) is bypassed & nothing renders. Instead, we end up getting 'locationTemp = undefined' and 'userLocation = undefined'. Find out why.
+
+  // Called when processData is called at the end of the searchFilter function call in the event listener, at the point where processData calls getForecast on the 'weather' variable declaration
+  // ATTEMPT #1: Wrap 'renderCurrentTemp' code inside a try/catch block
   // OPTION: renderCurrentTemp(userLocation); - no variable declaration at all
   const locationTemp = await renderCurrentTemp(userLocation);
   
-  // SHOW the forecast for that location during the next 7 days
+  // BRANCH: SHOW the forecast for that location during the next 7 days
   // renderWeeklyTemps
 
-  // TODO: This currently never gets read by the event listener. It stops after 'searchFilter' is done (and 'renderCurrentTemp' error before that)
   // DISPLAY the GIF for the related weather condition as a background image
   getWeatherGIF(userLocation);
 

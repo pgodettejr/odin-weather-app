@@ -56,34 +56,16 @@ async function renderCurrentTemp() {
   }
 }
 
-// TODO: Need another function responsible for rendering the 7 Day Forecast called 'renderWeeklyTemps()'
+// BRANCH: Need another function responsible for rendering the 7 Day Forecast called 'renderWeeklyTemps()'
 
 
-// OPTION: Possibly need to chain the (.then) promises as well (fetch(Weather Crossing), .then(result => fetch(GIPHY))). The function should also render the background matching the weather condition for the day.
-// ATTEMPT #1: Simply used 'processData.outlook(.summary)' first. (let weatherSummary = processData.outlook.summary;) 
-
-// OPTION: Promise.all on the other (async) functions may be a solution as well. Review how to set this up if needed.
-// const forecast = getForecast();
-// const weatherData = processData();
-
-// ATTEMPT #2: 'weatherData.then(() => { code below went in here })'
-
-// ATTEMPT #3: Switched from '.then' method in 2nd attempt to 'Promise.all([forecast, weatherData]).then(() => { code }' option above
-// Promise.all([forecast, weatherData]).then((function name with or w/o parentheses or empty parentheses) => { code goes here })
-
-// Gets called by search button event listener during 'getForecast' fetch request from 'processData' call in the 'searchFilter' call from the same event listener
 async function getWeatherGIF() {
-  // CALL processData function (OPTION: as a parameter of the function itself? do we call it at all?)
+  // CALL processData function
   const forecastData = await processData();
-
-  let weatherSummary = forecastData.outlook.summary;
 
   // READ the Weather Crossing API's 'icon set parameter' from the returned 'outlook' object (for today's temperature) in processData
   // SET a variable equal to that 'icon set parameter'
-
-  // TypeError: Cannot read properties of undefined (reading 'summary') is still being thrown here (showing in 'catch' below)
-  // TypeError: Cannot read properties of undefined (reading 'outlook') is thrown when we use 'this.outlook' over 'weatherData.outlook'
-  // let weatherSummary = weatherData.outlook.summary;
+  let weatherSummary = forecastData.outlook.summary;
 
   // CREATE an empty <img> element
   const img = document.createElement('img');
@@ -98,9 +80,9 @@ async function getWeatherGIF() {
       const fetchClip = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&q=${weatherSummary}&limit=1`, {mode: 'cors'})
     
       const resultClip = await fetchClip.json();
-      console.log(resultClip); // TODO: look at the json to make sure the img.src expressions below are correct (see TypeErrors below)
+      // console.log(resultClip);
 
-      // OPTION: Write code that finds the GIF with the largest dimensions in its original version in the data array & display that one
+      // BRANCH: Write code that finds the GIF with the largest dimensions in its original version in the data array & display that one
 
       // CASE weather summary (icon set parameter) OF
       switch (true) {
@@ -111,7 +93,6 @@ async function getWeatherGIF() {
           // SHOW the GIF as a background image for the weather results in the UI
 
           // OPTION: Potentially need a 'replaceChildren()' of some kind here if we change the <img> placeholder above
-          // Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'original')
           img.src = resultClip.data[0].images.original.url;
           img.style.backgroundImage = img.src;
           break; // OPTION: May need to be 'return true' instead
@@ -122,7 +103,6 @@ async function getWeatherGIF() {
           // SHOW the GIF as a background image for the weather results in the UI
 
           // OPTION: Potentially need a 'replaceChildren()' of some kind here if we change the <img> placeholder above
-          // Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'original')
           img.src = resultClip.data[0].images.original.url;
           img.style.backgroundImage = img.src;
           break; // OPTION: May need to be 'return true' instead

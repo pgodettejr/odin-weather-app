@@ -1,16 +1,12 @@
 // Variable that allows both functions below to declare the same user input location via global scope
 let myLocation;
 
-// Possibly need this empty array to add the outlooks from processData into
-// let outlooks = [];
-
 // Hits the API and returns all the weather data for a location
 // OPTION: Refactor this to the MDN example we have in Obsidian notes (under 'Divide & Conquer')
 async function getForecast(location) { 
   try {
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=8997Y4VLTDSVA5KYY96GVK9Y4`);
 
-    // TODO: The TypeError for the weatherSummary variable under the getWeatherGIF function in the UI module throws at this line. Why?
     myLocation = location; // This is so 'processData' below remembers the user input location
     const forecastData = await response.json();
 
@@ -84,8 +80,6 @@ async function processData() {
     // PRINT = console.log()
     console.log(outlook);  
 
-    // OPTION: Return this like a closure/factory function via 'return { outlook }' so the GIF fetching function has access to the outlook OR push it to the empty array above (outlooks.push(outlook);)? 
-    // ATTEMPT #1: Simply used 'processData.outlook' in other modules before changing this
     return { outlook }; 
   } catch (err) {
     console.error(err);
