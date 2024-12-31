@@ -6,7 +6,7 @@ import Update from './img/update.png';
 // DOM for "Weather Results" section of the page
 const forecastDisplay = document.querySelector('.search-results');
 
-let searchText = document.getElementById('search-text').value.trim();
+// let searchText = document.getElementById('search-text').value.trim();
 
 // Template for rendering the current/daily forecast
 // TODO: We need to take the 'outlook' object we get from 'processData' and render that info to the UI, not what we currently have now. Seeing if there's text in the search bar, then trying to grab the temp from the 'outlook' object for innerText afterwards doesn't make sense.
@@ -48,11 +48,16 @@ async function renderCurrentTemp() {
       // NOW: Uncaught TypeError: Cannot read properties of undefined (reading 'temperature')
       weatherTemp.innerText = weatherInfo.temperature; 
 
-      // TODO: Likely need to generate a text element showing the condition equal to the 'icon set parameter' here
+      // CREATE a text element to display the weather condition equal to the 'icon set parameter'
+      const weatherCondition = document.createElement('p');
+      weatherCondition.classList.add('weather-condition');
+      weatherCondition.innerText = weatherInfo.summary;
 
-      // TODO: We need a wrapper/container for both the location icon and the text for the actual location. Place the next 2 elements under it.
+      // CREATE a wrapper to contain both the location icon and the text for the actual location. Place the next 2 elements under it.
+      const locationWrapper = document.createElement('div');
+      locationWrapper.classList.add('location-wrapper');
 
-      // CREATE an image element for displaying the 'location' icon used in Google Map
+      // CREATE an image element for displaying the 'location' icon used in Google Maps
       // TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
       const weatherIcon = new Image();
       weatherIcon.src = Update;
@@ -61,12 +66,16 @@ async function renderCurrentTemp() {
       // CREATE a text element to hold the text that displays the location searched for
       let weatherLocation = document.createElement('p');
       weatherLocation.classList.add('weather-location');
-      weatherLocation.innerText = searchText;
+      weatherLocation.innerText = weatherInfo.location;
       
-      // APPEND the location, temperature and any image elements to the wrapper element
+      // APPEND the location elements under their related location wrapper
+      locationWrapper.appendChild(weatherIcon);
+      locationWrapper.appendChild(weatherLocation);
+
+      // APPEND the location wrapper containing all location info, the temperature and the weather condition to the wrapper element
       weatherWrapper.appendChild(weatherTemp);
-      weatherWrapper.appendChild(weatherIcon);
-      weatherWrapper.appendChild(weatherLocation);
+      weatherWrapper.appendChild(weatherCondition);
+      weatherWrapper.appendChild(locationWrapper);
 
       // APPEND the wrapper element to the 'forecastDisplay' element (the UI container)
       forecastDisplay.appendChild(weatherWrapper);
@@ -100,7 +109,7 @@ async function getWeatherGIF() {
       const fetchClip = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&q=${weatherSummary}&limit=1`, {mode: 'cors'})
     
       const resultClip = await fetchClip.json();
-      // console.log(resultClip);
+      console.log(resultClip);
 
       // BRANCH: Write code that finds the GIF with the largest dimensions in its original version in the data array & display that one
 
