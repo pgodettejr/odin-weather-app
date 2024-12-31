@@ -49,6 +49,7 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
   e.preventDefault();
   
   // Variable for 'searchFilter' function
+  // TODO: userLocation currently equals 'undefined' because this function isn't done running when 'renderCurrentTemp(userLocation)' is called in the 'locationTemp' variable below
   const userLocation = await searchFilter();
 
   // BRANCH: REMOVE (HIDE) the Heading element
@@ -62,10 +63,13 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
 
   // TODO: When renderCurrentTemp runs, all code inside its conditional if/else (see UI module) is bypassed & nothing renders. Instead, we end up getting 'locationTemp = undefined' and 'userLocation = undefined'. Find out why.
 
-  // Called when processData is called at the end of the searchFilter function call in the event listener, at the point where processData calls getForecast on the 'weather' variable declaration
-  // ATTEMPT #1: Wrap 'renderCurrentTemp' code inside a try/catch block
-  // OPTION: renderCurrentTemp(userLocation); - no variable declaration at all
+  // Called when processData is called at the end of the searchFilter function call in the event listener, at the point where processData calls getForecast on the 'weather' variable declaration. Because 'userLocation' is currently 'undefined' above, 'locationTemp' here is also 'undefined'
+  // *ATTEMPT #1: Wrap 'renderCurrentTemp' code inside a try/catch block
+  // *ATTEMPT #2: Call 'userLocation' itself on await instead of 'renderCurrentTemp(userLocation)' - await has no effect on the expression
+  // *ATTEMPT #3: renderCurrentTemp(userLocation); - no variable declaration at all
   const locationTemp = await renderCurrentTemp(userLocation);
+
+  // renderCurrentTemp(userLocation);
   
   // BRANCH: SHOW the forecast for that location during the next 7 days
   // renderWeeklyTemps
@@ -73,7 +77,8 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
   // DISPLAY the GIF for the related weather condition as a background image
   getWeatherGIF(userLocation);
 
-  return locationTemp
+  // TODO: JS never gets to this line after displaying the correct weather GIF. Do we even need to return this?
+  return locationTemp;
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for) - TODO: Delete this?
 });

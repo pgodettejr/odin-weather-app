@@ -9,52 +9,72 @@ const forecastDisplay = document.querySelector('.search-results');
 let searchText = document.getElementById('search-text').value.trim();
 
 // Template for rendering the current/daily forecast
+// TODO: We need to take the 'outlook' object we get from 'processData' and render that info to the UI, not what we currently have now. Seeing if there's text in the search bar, then trying to grab the temp from the 'outlook' object for innerText afterwards doesn't make sense.
 async function renderCurrentTemp() {
   // let searchText = document.getElementById('search-text').value.trim();
 
-  if (searchText) { 
-    forecastDisplay.replaceChildren(); // Erases previous weather results if necessary (may not keep this [here])
+  try {
+    // CALL 'processData' function (or 'searchFilter' function?)
+      const fetchData = await processData();
 
-    // Generate "Weather" wrapper to be added to the weather results area (div container)
-    const weatherWrapper = document.createElement('div');
-    weatherWrapper.classList.add('weather-wrapper');
+    // OBTAIN the 'outlook' object returned from the 'processData' (or 'searchFilter') function
+    // SET a variable equal to the 'outlook' object returned from 'processData' function
+      const weatherInfo = fetchData.outlook;
 
-    // Temperature in Fahrenheit or Celsius
-    let weatherTemp = document.createElement('h4');
-    weatherTemp.classList.add('weather-temp');
+    // *ATTEMPT: removed the 'if' statement entirely for testing as it doesn't make sense for this code to run based on search box text. It should just run either based on the object returned from 'processData' or based on its await call using the 'userLocation' as a parameter in the event listener (see 'userLocation' and 'locationTemp' variables in the event listener under the index module)
+    // if (searchText) { 
 
-    // TODO: Test this line of code. If the text isn't correct, figure out how to get the temp results from the fetch request to show here
-    // Put this under button logic in index module if necessary
+      // CALL 'replaceChildren' method on the DOM element responsible for holding all UI display elements (forecastDisplay) to remove any weather data from previous searches
+      // OPTION: May not keep this [here] - move to search button event listener in index module?
+      forecastDisplay.replaceChildren(); 
 
-    // WAS: Uncaught TypeError: Cannot read properties of undefined (reading 'currentConditions')
-    // ATTEMPT #1: Removed '.response' from the expression 'getForecast.response.currentConditions.temp'
-    // ATTEMPT #2: Added async/await to the function & this line of code (await getForecast.currentConditions.temp)
-    // ATTEMPT #3: Changed to "processData.outlook.temperature"
-    // NOW: Uncaught TypeError: Cannot read properties of undefined (reading 'temperature')
-    weatherTemp.innerText = await processData.outlook.temperature; 
+      // CREATE a wrapper element to be added to the weather results area to contain the text used for displaying the weather
+      const weatherWrapper = document.createElement('div');
+      weatherWrapper.classList.add('weather-wrapper');
 
-    // TODO: Likely need to generate a text element showing the condition equal to the 'icon set parameter' here
+      // CREATE a text element to hold the text that displays the actual temperature
+      let weatherTemp = document.createElement('h4');
+      weatherTemp.classList.add('weather-temp');
 
-    // TODO: We need a wrapper/container for both the location icon and the text for the actual location. Place the next 2 elements under it.
+      // CALL the 'innerText' method and SET it equal to the 'temperature' key in the 'outlook' object in order to display the temperature
 
-    // Name of location from the search bar, icon included 
-    // TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
-    const weatherIcon = new Image();
-    weatherIcon.src = Update;
-    weatherIcon.classList.add("image-button");
+      // TODO: Test this line of code. If the text isn't correct, figure out how to get the temp results from the fetch request to show here
+      // Put this under button logic in index module if necessary
 
-    let weatherLocation = document.createElement('p');
-    weatherLocation.classList.add('weather-location');
-    weatherLocation.innerText = searchText;
-    
-    // Append everything where it needs to be
-    weatherWrapper.appendChild(weatherTemp);
-    weatherWrapper.appendChild(weatherIcon);
-    weatherWrapper.appendChild(weatherLocation);
+      // WAS: Uncaught TypeError: Cannot read properties of undefined (reading 'currentConditions')
+      // ATTEMPT #1: Removed '.response' from the expression 'getForecast.response.currentConditions.temp'
+      // ATTEMPT #2: Added async/await to the function & this line of code (await getForecast.currentConditions.temp)
+      // ATTEMPT #3: Changed to "processData.outlook.temperature"
+      // NOW: Uncaught TypeError: Cannot read properties of undefined (reading 'temperature')
+      weatherTemp.innerText = weatherInfo.temperature; 
 
-    forecastDisplay.appendChild(weatherWrapper);
+      // TODO: Likely need to generate a text element showing the condition equal to the 'icon set parameter' here
+
+      // TODO: We need a wrapper/container for both the location icon and the text for the actual location. Place the next 2 elements under it.
+
+      // CREATE an image element for displaying the 'location' icon used in Google Map
+      // TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
+      const weatherIcon = new Image();
+      weatherIcon.src = Update;
+      weatherIcon.classList.add("image-button");
+
+      // CREATE a text element to hold the text that displays the location searched for
+      let weatherLocation = document.createElement('p');
+      weatherLocation.classList.add('weather-location');
+      weatherLocation.innerText = searchText;
+      
+      // APPEND the location, temperature and any image elements to the wrapper element
+      weatherWrapper.appendChild(weatherTemp);
+      weatherWrapper.appendChild(weatherIcon);
+      weatherWrapper.appendChild(weatherLocation);
+
+      // APPEND the wrapper element to the 'forecastDisplay' element (the UI container)
+      forecastDisplay.appendChild(weatherWrapper);
+    // }
+  } catch (err) {
+    console.error(`Error: ${err}`);
   }
-}
+};
 
 // BRANCH: Need another function responsible for rendering the 7 Day Forecast called 'renderWeeklyTemps()'
 
