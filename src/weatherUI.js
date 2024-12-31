@@ -37,10 +37,9 @@ async function renderCurrentTemp() {
     weatherTemp.innerText = weatherInfo.temperature + "°F"; 
 
     // CREATE a text element to display the weather condition equal to the 'icon set parameter'
-    // BRANCH: CASE weather condition to display it with proper grammar (e.g.: "Partly Cloudy" for "partly-cloudy-day"). Use a combination of 'toUpperCase' method and RegEx strings to remove the hyphens, then make all the words uppercase afterwards
     const weatherCondition = document.createElement('p');
     weatherCondition.classList.add('weather-condition');
-    weatherCondition.innerText = weatherInfo.summary;
+    weatherCondition.innerText = weatherInfo.summary.replace("-", " ");
 
     // CREATE a wrapper to contain both the location icon and the text for the actual location. Place the next 2 elements under it.
     const locationWrapper = document.createElement('div');
@@ -81,7 +80,9 @@ async function getWeatherGIF() {
 
   // READ the Weather Crossing API's 'icon set parameter' from the returned 'outlook' object (for today's temperature) in processData
   // SET a variable equal to that 'icon set parameter'
-  let weatherSummary = forecastData.outlook.summary;
+
+  // OPTION: Potentially concatenate "-weather" here to stop the API from getting non-weather related GIFs. Change all conditionals in the first case of the switch statement below to '.startsWith' if we go this route. Not the best since all summary text will show "Weather" at the end of each one in the UI.
+  let weatherSummary = forecastData.outlook.summary
 
   // CREATE an empty <img> element
   const img = document.createElement('img');
@@ -101,6 +102,7 @@ async function getWeatherGIF() {
       // BRANCH: Write code that finds the GIF with the largest dimensions in its original version in the data array & display that one
 
       // CASE weather summary (icon set parameter) OF
+      // BRANCH: "clear-" condition always shows a non-weather related GIF as the top GIF from the GIPHY API. Find a fix for this.
       switch (true) {
         case // fetch() a random weather GIF from the GIPHY API for any of these 'icon1' conditions
         (weatherSummary === "snow") || (weatherSummary === "rain") || (weatherSummary === "fog") || 
