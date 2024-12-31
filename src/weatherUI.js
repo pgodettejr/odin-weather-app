@@ -37,6 +37,7 @@ async function renderCurrentTemp() {
     weatherTemp.innerText = weatherInfo.temperature + "°F"; 
 
     // CREATE a text element to display the weather condition equal to the 'icon set parameter'
+    // BRANCH: CASE weather condition to display it with proper grammar (e.g.: "Partly Cloudy" for "partly-cloudy-day"). Use a combination of 'toUpperCase' method and RegEx strings to remove the hyphens, then make all the words uppercase afterwards
     const weatherCondition = document.createElement('p');
     weatherCondition.classList.add('weather-condition');
     weatherCondition.innerText = weatherInfo.summary;
@@ -45,20 +46,19 @@ async function renderCurrentTemp() {
     const locationWrapper = document.createElement('div');
     locationWrapper.classList.add('location-wrapper');
 
-    // CREATE an image element for displaying the 'location' icon used in Google Maps
-    // TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
-    const weatherIcon = new Image();
-    weatherIcon.src = GPS;
-    weatherIcon.classList.add("image-button");
-
     // CREATE a text element to hold the text that displays the location searched for
     let weatherLocation = document.createElement('p');
     weatherLocation.classList.add('weather-location');
     weatherLocation.innerText = weatherInfo.location;
-    
+
+    // CREATE an image element for displaying the 'location' icon used in Google Maps
+    const weatherIcon = new Image();
+    weatherIcon.src = GPS;
+    weatherIcon.classList.add("image-button");
+
     // APPEND the location elements under their related location wrapper
-    locationWrapper.appendChild(weatherIcon);
     locationWrapper.appendChild(weatherLocation);
+    locationWrapper.appendChild(weatherIcon);
 
     // APPEND the location wrapper containing all location info, the temperature and the weather condition to the wrapper element
     weatherWrapper.appendChild(weatherTemp);

@@ -101,7 +101,7 @@ body {
   font-size: 60%;
 }
 
-.temperature-format {
+.temperature-scales {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,6 +115,16 @@ button {
 
   background-color: goldenrod;
   border: 1px solid goldenrod;
+}
+
+.weather-wrapper {
+  margin-bottom: 2rem;
+}
+
+.location-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5rem;
 }
 
 /* Potentially for the transition of all the elements on the first page. May need two of these animation frames?
