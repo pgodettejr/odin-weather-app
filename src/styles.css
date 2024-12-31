@@ -74,12 +74,17 @@ body {
   align-items: center;
 }
 
+.search {
+  display: flex;
+  flex-direction: row;
+}
+
 /* Search bar styling starts here (NOT the div that the search bar is in)  */
 .search #search-text {
   display: block;
   font-family: inherit;
   /* font-size: 1rem; */
-  margin: 0;
+  margin: 1.8rem;
   padding: 5px;
   box-sizing: border-box;
   background-color: #EEE;
@@ -94,6 +99,13 @@ body {
 
 #search-text {
   font-size: 60%;
+}
+
+.temperature-format {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
 }
 
 button {
