@@ -1,6 +1,6 @@
 import { processData } from './weatherAppLogic.js';
 import './styles.css';
-import Update from './img/update.png';
+import GPS from './img/Emey87-Trainee-Gps.48.png';
 // import Delete from './img/trash-bin.png';
 
 // DOM for "Weather Results" section of the page
@@ -48,7 +48,7 @@ async function renderCurrentTemp() {
     // CREATE an image element for displaying the 'location' icon used in Google Maps
     // TODO: this is a sample. Need to change 'Update' image link above after getting location/map icon from the internet (see Excalidraw)
     const weatherIcon = new Image();
-    weatherIcon.src = Update;
+    weatherIcon.src = GPS;
     weatherIcon.classList.add("image-button");
 
     // CREATE a text element to hold the text that displays the location searched for
