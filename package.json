@@ -8,7 +8,8 @@
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "build": "webpack",
-    "dist-push": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
+    "dist-push": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages",
+    "dist-push-init": "git push origin && git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
