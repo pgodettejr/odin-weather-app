@@ -87,3 +87,35 @@ async function processData() {
 };
 
 export { getForecast, processData }
+
+// TODO: 
+
+// Example code for replacing Fahrenheit degree with its Celsius equivalent
+// The 'convert' function sets the Celsius number based on the number of Fahrenheit degrees passed in a string to the f2c function, which then the f2c function returns the number in Celsius. Instead of "x" being the parameter, we would have no parameter in ours.
+
+// Need to figure out a function for the reverse of this as well (Celsius to Fahrenheit) and implement both to each button's logic in index
+// Will this method work for the reverse function?: `${(Math.round(((p1 * 9 / 5) + 32) * 10) / 10)}F`;
+
+// function f2c(x) {
+//   function convert(str, p1, offset, s) { - // "p1" gives access to the number of Fahrenheit degrees
+//     return `${((p1 - 32) * 5) / 9}C`;
+//   }
+//   const s = String(x);
+//   const test = /(-?\d+(?:\.\d*)?)F\b/g; - // Checks for any number ending in "F"
+//   return s.replace(test, convert);
+// }
+
+// OPTION: Figure out how to access both the Fahrenheit and Celsius degrees from the json returned from the API and store both in the 'outlook' object generated from 'processData()'. Then, render (update renderCurrentTemp in UI) and toggle from there
+
+// Example function to use if we can figure out how to add both numbers to the 'outlook' object above (test this - might not work as is)
+// function switchTemp() {
+//   let weatherScale = 'F';
+
+//   if (outlook.temperature === outlook.celsius) {
+//     outlook.temperature = outlook.fahrenheit;
+//   } else {
+//     outlook.temperature = outlook.celsius;
+//   }
+
+//   document.querySelector('weather-temp').innerText = outlook.temperature + '&deg;' + weatherScale;
+// }
