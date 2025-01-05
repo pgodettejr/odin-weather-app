@@ -91,27 +91,28 @@ async function processData() {
 // Example code for replacing Fahrenheit degree with its Celsius equivalent using the 'replace()' method in JS
 // The 'convert' function sets the Celsius number based on the number of Fahrenheit degrees passed in a string to the f2c function, which then the f2c function returns the number in Celsius. Instead of "x" being the parameter, we would have no parameter in ours.
 
-// function toggleCelsius(x) {
-//   function convertCelsius(str, p1, offset, s) { // "p1" gives access to the number of Fahrenheit degrees
-//     return `${((p1 - 32) * 5) / 9}C`;
-//   }
-//   const s = String(x);
-//   const test = /(-?\d+(?:\.\d*)?)F\b/g; - // Checks for any number ending in "F"
-//   return s.replace(test, convertCelsius);
-// }
+function toggleCelsius(x) {
+  function convertCelsius(str, p1, offset, s) { // "p1" gives access to the number of Fahrenheit degrees
+    return `${((p1 - 32) * 5) / 9}C`;
+  }
+
+  const s = String(x);
+  const test = /(-?\d+(?:\.\d*)?)F\b/g; // Checks for any number ending in "F"
+  return s.replace(test, convertCelsius);
+}
 
 // Our first attempt at the reverse of the above function (Celsius to Fahrenheit). Implement both functions to each button's logic in index?
 // Test this method to see if it works? We might not need 'Math.round()': `${(Math.round(((p1 * 9 / 5) + 32) * 10) / 10)}F`;
 
-// function toggleFahrenheit(x) {
-//   function convertFahrenheit(str, p1, offset, s) { // "p1" gives access to the number of Celsius degrees
-//     return `${(Math.round(((p1 * 9 / 5) + 32) * 10) / 10)}F`;
-//   }
+function toggleFahrenheit(x) {
+  function convertFahrenheit(str, p1, offset, s) { // "p1" gives access to the number of Celsius degrees
+    return `${(Math.round(((p1 * 9 / 5) + 32) * 10) / 10)}F`;
+  }
 
-//   const s = String(x);
-//   const test = /(-?\d+(?:\.\d*)?)C\b/g;
-//   return s.replace(test, convertFahrenheit);
-// }
+  const s = String(x);
+  const test = /(-?\d+(?:\.\d*)?)C\b/g;
+  return s.replace(test, convertFahrenheit);
+}
 
 // OPTION: Figure out how to access both the Fahrenheit and Celsius degrees from the json returned from the API and store both in the 'outlook' object generated from 'processData()'. Then, render (update renderCurrentTemp in UI) and toggle from there
 
@@ -128,4 +129,4 @@ async function processData() {
 //   document.querySelector('weather-temp').innerText = outlook.temperature + '&deg;' + weatherScale;
 // }
 
-export { getForecast, processData }
+export { getForecast, processData, toggleCelsius, toggleFahrenheit }

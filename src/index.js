@@ -1,4 +1,4 @@
-import { getForecast, processData } from './weatherAppLogic.js';
+import { getForecast, processData, toggleCelsius, toggleFahrenheit } from './weatherAppLogic.js';
 import { renderCurrentTemp, getWeatherGIF } from './weatherUI.js';
 import './styles.css';
 // import Plus from './img/plus.png';
@@ -81,6 +81,23 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
   return locationTemp;
 
   // getForecast.response.currentConditions.temp; (for current temp of location searched for) - TODO: Delete this?
+});
+
+// Fahrenheit and Celsius button logic that call 'toggleFahrenheit()' & 'toggleCelsius()' respectively to toggle the temperature number being shown in the UI of the current location between the degrees in Fahrenheit and the degrees in Celsius
+const tempScale = document.querySelector('h4');
+const fahrenheitBtn = document.getElementById('fahrenheit-btn');
+const celsiusBtn = document.getElementById('celsius-btn');
+
+fahrenheitBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  toggleFahrenheit(tempScale);
+});
+
+celsiusBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  toggleCelsius(tempScale);
 });
 
 // Random cat GIF and GIF search code template for use above
