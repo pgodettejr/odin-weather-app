@@ -94,10 +94,16 @@ async function getWeatherGIF() {
   // OBTAIN the GIFs from the GIPHY API related to that variable representing the weather text in the 'icon set parameter'
   let summonClip = async () => {
     try {
-      const fetchClip = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&q=${weatherSummary}&limit=1`, {mode: 'cors'})
+      const fetchClip = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&q=${weatherSummary}`, {mode: 'cors'}) // OPTION: Set the '&limit=number' parameter again as currently the function randomly pulls from 50+ GIFs (first 5?)
     
       const resultClip = await fetchClip.json();
       console.log(resultClip);
+
+      // SET a random index for the array of GIFs returned in the GIPHY API json
+      const randomIndex = Math.floor(Math.random() * resultClip.data.length);
+
+      // OBTAIN the GIF at the random index
+      const randomGIF = resultClip.data[randomIndex];
 
       // BRANCH: Write code that finds the GIF with the largest dimensions in its original version in the data array & display that one
 
@@ -111,7 +117,7 @@ async function getWeatherGIF() {
           // BRANCH: SHOW the GIF as a background image for the weather results in the UI
 
           // OPTION: Potentially need a 'replaceChildren()' of some kind here if we change the <img> placeholder above for background image
-          img.src = resultClip.data[0].images.original.url;
+          img.src = randomGIF.images.original.url;
           img.style.backgroundImage = img.src;
           break; // OPTION: May need to be 'return true' instead
 
@@ -121,7 +127,7 @@ async function getWeatherGIF() {
           // BRANCH: SHOW the GIF as a background image for the weather results in the UI
 
           // OPTION: Potentially need a 'replaceChildren()' of some kind here if we change the <img> placeholder above for background image
-          img.src = resultClip.data[0].images.original.url;
+          img.src = randomGIF.images.original.url;
           img.style.backgroundImage = img.src;
           break; // OPTION: May need to be 'return true' instead
       }
