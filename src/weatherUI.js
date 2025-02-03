@@ -1,7 +1,6 @@
 import { processData } from './weatherAppLogic.js';
 import './styles.css';
 import GPS from './img/Emey87-Trainee-Gps.48.png';
-// import Delete from './img/trash-bin.png';
 
 // DOM for "Weather Results" section of the page
 const forecastDisplay = document.querySelector('.search-results');

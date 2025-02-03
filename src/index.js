@@ -1,12 +1,6 @@
-import { getForecast, processData, toggleCelsius, toggleFahrenheit } from './weatherAppLogic.js';
+import { data, getForecast, processData, toggleCelsius, toggleFahrenheit } from './weatherAppLogic.js';
 import { renderCurrentTemp, getWeatherGIF } from './weatherUI.js';
 import './styles.css';
-// import Plus from './img/plus.png';
-
-getForecast("London, UK");
-
-// TODO: Doesn't recognize the previous location in the getForecast call above. Location shows 'undefined' & API grabs default (Fine, NY)
-processData();
 
 // Search bar functionality responsible for reading the location data in the search bar and fetching the forecast for that location
 async function searchFilter() {
@@ -30,7 +24,8 @@ async function searchFilter() {
       searchResults.appendChild(searchError);
   
       // SHOW the <span> element with its error message in the UI
-      return; // Supposed to end the function without doing anything else. Do we need it?
+      // BRANCH: Supposed to end the function without doing anything else. Do we need it?
+      return; 
     // ELSE log the weather location result from the search bar in the console
     } else {
       processData();
@@ -49,7 +44,6 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
   e.preventDefault();
   
   // Variable for 'searchFilter' function
-  // TODO: userLocation currently equals 'undefined' because this function isn't done running when 'renderCurrentTemp(userLocation)' is called in the 'locationTemp' variable below
   const userLocation = await searchFilter();
 
   // BRANCH: REMOVE (HIDE) the Heading element
@@ -58,18 +52,8 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
 
   // CALL the render forecast functions under those elements that will:
 
-  // Uncaught TypeError: Cannot read properties of undefined (reading 'then') - was userLocation.then(() => {} with async/await)
   // SHOW the forecast for that location for that day
-
-  // TODO: When renderCurrentTemp runs, all code inside its conditional if/else (see UI module) is bypassed & nothing renders. Instead, we end up getting 'locationTemp = undefined' and 'userLocation = undefined'. Find out why.
-
-  // Called when processData is called at the end of the searchFilter function call in the event listener, at the point where processData calls getForecast on the 'weather' variable declaration. Because 'userLocation' is currently 'undefined' above, 'locationTemp' here is also 'undefined'
-  // *ATTEMPT #1: Wrap 'renderCurrentTemp' code inside a try/catch block
-  // *ATTEMPT #2: Call 'userLocation' itself on await instead of 'renderCurrentTemp(userLocation)' - await has no effect on the expression
-  // *ATTEMPT #3: renderCurrentTemp(userLocation); - no variable declaration at all
   const locationTemp = await renderCurrentTemp(userLocation);
-
-  // renderCurrentTemp(userLocation);
   
   // BRANCH: SHOW the forecast for that location during the next 7 days
   // renderWeeklyTemps
@@ -77,99 +61,26 @@ searchButton.addEventListener('click', async (e) => { // CALL the searchButton e
   // DISPLAY the GIF for the related weather condition as a background image
   getWeatherGIF(userLocation);
 
-  // TODO: JS never gets to this line after displaying the correct weather GIF. Do we even need to return this?
+  // BRANCH: Do we even need to return this?
   return locationTemp;
-
-  // getForecast.response.currentConditions.temp; (for current temp of location searched for) - TODO: Delete this?
 });
 
 // Fahrenheit and Celsius button logic that call 'toggleFahrenheit()' & 'toggleCelsius()' respectively to toggle the temperature number being shown in the UI of the current location between the degrees in Fahrenheit and the degrees in Celsius
-const tempScale = document.querySelector('h4');
 const fahrenheitBtn = document.getElementById('fahrenheit-btn');
 const celsiusBtn = document.getElementById('celsius-btn');
 
 fahrenheitBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
-  toggleFahrenheit(tempScale);
+  let celsiusScale = document.querySelector('.weather-temp');
+  toggleFahrenheit(celsiusScale);
+  celsiusScale.innerText = data.temperature + "°F"
 });
 
 celsiusBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
-  toggleCelsius(tempScale);
+  let fahrenheitScale = document.querySelector('.weather-temp');
+  toggleCelsius(fahrenheitScale);
+  fahrenheitScale.innerText = data.temperature + "°C"
 });
-
-// Random cat GIF and GIF search code template for use above
-
-// Image for random cat GIF on page load as well as GIF refresh for "More Cats!" button
-// const img = document.querySelector('img');
-    
-// Search DOM
-// const searchButton = document.getElementById('search-btn');
-
-// Search bar functionality
-// function searchFilter() {
-//   const searchInput = document.querySelector('.search-text').value;
-//   fetch(`https://api.giphy.com/v1/gifs/search?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&q=${searchInput}&limit=5`, {mode: 'cors'})
-//     .then(response => response.json())
-//     .then(response => {
-//       // Supposed to handle any scenario when GIPHY doesn't find any GIFs related to the search
-//       if (response.data.length === 0) {
-//         const searchError = document.querySelector('span');
-//         const errorText = document.createTextNode("No GIF related to the search was found");
-//         searchError.appendChild(errorText);
-
-//         // When this console.log is the only code under this 'then', all data info from the search shows up in console
-//         console.log(response); 
-
-//         return; // Supposed to end the function without doing anything else. Do we need it?
-//       }
-
-//       const searchResults = document.querySelector('.search-results');
-//       searchResults.replaceChildren();
-
-//       response.data.forEach(result => {
-//         const gifWrapper = document.createElement("div");
-//         gifWrapper.classList.add("result-wrapper");
-
-//         const resultGif = document.createElement("img");
-//         resultGif.src = result.images.original.url;
-
-//         gifWrapper.appendChild(resultGif);
-//         searchResults.appendChild(gifWrapper);
-//       })
-//     })
-//     .catch(function(err) {
-//       console.error(`Error: ${err}`);
-//     });  
-// };
-
-// async function getCats() {
-//   const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&s=cats', {mode: 'cors'})
-//   const catData = await response.json();
-//   img.src = catData.data.images.original.url;
-// }
-
-// getCats();
-
-// const catsButton = document.querySelector('#fetch');
-
-// catsButton.addEventListener('click', async () => {
-//   try {
-//     const fetchCats = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Pge93Q0t0NjGU4FoHUse9HbIP6TRMCtP&s=cats', {mode: 'cors'})
-//     const anotherCat = await fetchCats.json();
-//     img.src = anotherCat.data.images.original.url; 
-//   } catch (e) {
-//     console.error(`Error: ${e}`);
-//   }
-// });
-
-
-// Possible template to use for the weather icons after the user has search for the forecast of a location
-// const headerTask = document.getElementById("add-task");
-
-// const taskIcon = new Image();
-// taskIcon.src = Plus;
-// taskIcon.classList.add("image-button");
-// headerTask.appendChild(taskIcon);

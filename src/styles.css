@@ -102,7 +102,6 @@ body {
 }
 
 .temperature-scales {
-  /* Swap this to 'display: none;' if we can't figure out JS for the Fahrenheit/Celsius toggling */
   display: flex; 
   justify-content: center;
   align-items: center;
